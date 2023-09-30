@@ -1,27 +1,26 @@
 import bcrypt from "bcrypt";
 import { NextApiResponse, NextApiRequest } from "next";
-import prismaDB from "@/lib/prismadb";
+import prismaDb from "@/lib/prismadb";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   if (req.method !== "POST") {
-    return res.status(405);
+    return res.status(405).end();
   }
   try {
     const { email, password, name } = req.body;
-    const existingUser = await prismaDB.user.findUnique({
-      where: { email: email },
+    const existingUser = await prismaDb.user.findUnique({
+      where: { email },
     });
-
     if (existingUser) {
       return res.status(422).json({ error: "Email already exist" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const user = await prismaDB.user.create({
+    const user = await prismaDb.user.create({
       data: {
         email: email,
         hashedPassword: hashedPassword,
