@@ -26,14 +26,12 @@ const Auth = () => {
         email,
         password,
         redirect: false,
-        callbackUrl: "/",
+        callbackUrl: "/profile",
       });
-
-      router.push("/");
     } catch (error) {
       console.error(error);
     }
-  }, [email, password, router]);
+  }, [email, password]);
 
   // register method
   const register = useCallback(async () => {
@@ -99,15 +97,17 @@ const Auth = () => {
             >
               {variant === "login" ? "Sign In" : "Sign Up"}
             </button>
-            {/* <div className="flex flex-row items-center gap-4 justify-center mt-8">
+            {/* 
+            Google and Github Login
+            <div className="flex flex-row items-center gap-4 justify-center mt-8">
               <button
-                onClick={() => signIn("google", { callbackUrl: "/" })}
+                onClick={() => signIn("google", { callbackUrl: "/profile" })}
                 className="w-10 h-10 bg-white outline-none rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition"
               >
                 <FcGoogle size={30} />
               </button>
               <button
-                onClick={() => signIn("github", { callbackUrl: "/" })}
+                onClick={() => signIn("github", { callbackUrl: "/profile" })}
                 className="w-10 h-10 bg-white outline-none rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition"
               >
                 <FaGithub size={30} />
